@@ -28,6 +28,8 @@ class Excel
     protected $isRightToLeft = false;
 
 
+    private $custom_workbook_print_area_xml = '';
+
     /**
      * Excel constructor
      *
@@ -718,6 +720,16 @@ class Excel
         return $this->sheets;
     }
 
+    //BEGIN ADDED BY LY
+    public function setCustomWorkbookPrintAreaXml($custom_workbook_print_area_xml){
+        $this->custom_workbook_print_area_xml = $custom_workbook_print_area_xml;
+    }
+
+    public function getCustomWorkbookPrintAreaXml(){
+        return $this->custom_workbook_print_area_xml;
+    }
+    //END ADDED BY LY
+
     /**
      * Save generated file
      *
@@ -726,7 +738,7 @@ class Excel
      */
     public function save($fileName, $overWrite = true)
     {
-        $this->writer->saveToFile($fileName, $overWrite, $this->getMetadata());
+        $this->writer->saveToFile($fileName, $overWrite, $this->getMetadata(), $this->custom_workbook_print_area_xml);
     }
 
     /**
