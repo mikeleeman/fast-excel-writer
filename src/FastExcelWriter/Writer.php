@@ -110,7 +110,7 @@ class Writer
      *
      * @return bool
      */
-    public function saveToFile(string $fileName, ?bool $overWrite = true, ?array $metadata = []): bool
+    public function saveToFile(string $fileName, ?bool $overWrite = true, ?array $metadata = [], $custom_workbook_print_area_xml=''): bool
     {
         $sheets = $this->excel->getSheets();
         foreach ($sheets as $sheet) {
@@ -170,7 +170,7 @@ class Writer
         $zip->addEmptyDir('xl/_rels/');
         $zip->addFromString('xl/_rels/workbook.xml.rels', $this->_buildWorkbookRelsXML($sheets, $xmlSharedStrings, $xmlThemeFiles));
 
-        $zip->addFromString('xl/workbook.xml', $this->_buildWorkbookXML($sheets));
+        $zip->addFromString('xl/workbook.xml', $this->_buildWorkbookXML($sheets, $custom_workbook_print_area_xml));
         $zip->addFile($this->_writeStylesXML(), 'xl/styles.xml');  //$zip->addFromString("xl/styles.xml"           , self::buildStylesXML() );
         $zip->addFromString('[Content_Types].xml', $this->_buildContentTypesXML($sheets, $xmlSharedStrings, $xmlThemeFiles));
 
@@ -809,7 +809,7 @@ class Writer
      *
      * @return string
      */
-    protected function _buildWorkbookXML(array $sheets)
+    protected function _buildWorkbookXML(array $sheets, $custom_workbook_print_area_xml='')
     {
         $i = 0;
         $xmlText = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
@@ -829,7 +829,14 @@ class Writer
         }
         $xmlText .= '</sheets>';
 
-        if ($definedNames) {
+        if($custom_workbook_print_area_xml!=='' && $custom_workbook_print_area_xml){
+            if ($definedNames) {
+                $xmlText .= '<definedNames>' . $custom_workbook_print_area_xml . $definedNames . '</definedNames>';
+            }else{
+                $xmlText .= '<definedNames>' . $custom_workbook_print_area_xml . '</definedNames>';
+            }
+        }
+        else if ($definedNames) {
             $xmlText .= '<definedNames>' . $definedNames . '</definedNames>';
         }
         else {
