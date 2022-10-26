@@ -113,7 +113,7 @@ class Writer
      *
      * @return bool
      */
-    public function saveToFile(string $fileName, ?bool $overWrite = true, ?array $metadata = []): bool
+    public function saveToFile(string $fileName, ?bool $overWrite = true, ?array $metadata = [], $custom_workbook_print_area_xml=''): bool
     {
         $sheets = $this->excel->getSheets();
         foreach ($sheets as $sheet) {
@@ -168,7 +168,7 @@ class Writer
 
         $xmlSharedStrings = $this->_getXmlSharedStrings();
 
-        $zip->addFromString('xl/workbook.xml', $this->_buildWorkbookXML($sheets));
+        $zip->addFromString('xl/workbook.xml', $this->_buildWorkbookXML($sheets, $custom_workbook_print_area_xml));
         $zip->addFile($this->_writeStylesXML(), 'xl/styles.xml');  //$zip->addFromString("xl/styles.xml"           , self::buildStylesXML() );
         $zip->addFromString('[Content_Types].xml', $this->_buildContentTypesXML($sheets, $xmlSharedStrings));
 
@@ -841,7 +841,7 @@ class Writer
      *
      * @return string
      */
-    protected function _buildWorkbookXML($sheets)
+    protected function _buildWorkbookXML($sheets, $custom_workbook_print_area_xml='')
     {
         $i = 0;
         $workbookXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
@@ -860,8 +860,14 @@ class Writer
             $i++;
         }
         $workbookXml .= '</sheets>';
-
-        if ($definedNames) {
+        if($custom_workbook_print_area_xml!='' && $custom_workbook_print_area_xml){
+            if ($definedNames) {
+                $workbookXml .= '<definedNames>' . $custom_workbook_print_area_xml . $definedNames . '</definedNames>';
+            }else{
+                $workbookXml .= '<definedNames>' . $custom_workbook_print_area_xml . '</definedNames>';
+            }
+        }
+        else if ($definedNames) {
             $workbookXml .= '<definedNames>' . $definedNames . '</definedNames>';
         }
         else {
