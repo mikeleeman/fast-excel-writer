@@ -75,6 +75,8 @@ class Sheet
     protected array $externalLinks = [];
     protected int $externalLinksCount = 0;
 
+    private $custom_page_break_xml = '';
+
     /**
      * Sheet constructor
      *
@@ -90,6 +92,18 @@ class Sheet
         ];
     }
 
+    //BEGIN ADDED BY LY
+
+    public function setCustomPageBreakXml($custom_xml){
+        $this->custom_page_break_xml = $custom_xml;
+    }
+
+    public function getCustomPageBreakXml(){
+        return $this->custom_page_break_xml;
+    }
+
+    //END ADDED BY LY
+    
     /**
      * Compatibility with previous versions
      *

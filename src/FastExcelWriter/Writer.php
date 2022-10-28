@@ -361,6 +361,10 @@ class Writer
         $sheet->fileWriter->write('<oddFooter>&amp;C&amp;&quot;Times New Roman,Regular&quot;&amp;12Page &amp;P</oddFooter>');
         $sheet->fileWriter->write('</headerFooter>');
 
+        if($sheet->getCustomPageBreakXml()!=='' && $sheet->getCustomPageBreakXml()){
+            $sheet->fileWriter->write($sheet->getCustomPageBreakXml());
+        }
+
         $sheet->fileWriter->write('</worksheet>');
         $sheet->fileWriter->flush(true);
 
