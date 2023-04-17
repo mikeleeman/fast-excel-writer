@@ -77,6 +77,8 @@ class Sheet
 
     private $custom_page_break_xml = '';
 
+    private $custom_password_for_read_only = null;
+
     /**
      * Sheet constructor
      *
@@ -93,6 +95,32 @@ class Sheet
     }
 
     //BEGIN ADDED BY LY
+
+    public function setPasswordForReadOnlyProtection($password){
+
+        if($password=="" || !isset($password)){
+            return;
+        }
+
+        $len1 = strlen($password);
+
+        $val = 0;
+        foreach(array_reverse(str_split($password)) as $char1) {
+        
+        $val ^= ord($char1);
+        $val =  (($val >> 14) & 0x01) | (($val << 1) & 0x7fff);
+        }
+
+        $val ^= $len1;
+
+        $val ^= 0xCE4B;
+
+        $this->custom_password_for_read_only =  dechex($val);
+    }
+
+    public function getPasswordForReadOnlyProtection(){
+        return $this->custom_password_for_read_only;
+    }
 
     public function setCustomPageBreakXml($custom_xml){
         $this->custom_page_break_xml = $custom_xml;

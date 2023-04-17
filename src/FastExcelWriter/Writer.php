@@ -245,6 +245,12 @@ class Writer
             $fileWriter->write('<dimension ref="A1:' . $maxCell . '"/>');
         }
 
+        //custom sheet protection here
+
+        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
+            $fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
+        }
+
         $rightToLeftValue = $sheet->isRightToLeft() ? 'true' : 'false';
 
         $fileWriter->write('<sheetViews>');
