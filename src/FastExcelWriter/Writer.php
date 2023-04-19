@@ -291,10 +291,6 @@ class Writer
         }
         //$fileWriter->write('<col collapsed="false" hidden="false" max="1024" min="' . ($i + 1) . '" style="0" customWidth="false" width="11.5"/>');
 
-        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
-            $fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
-        }
-
         return $fileWriter;
     }
 
@@ -348,6 +344,10 @@ class Writer
             }
         }
         $sheet->fileWriter->write('<printOptions headings="false" gridLines="false" gridLinesSet="true" horizontalCentered="false" verticalCentered="false"/>');
+
+        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
+            $sheet->fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
+        }
 
         $links = $sheet->getExternalLinks();
         if ($links && $this->linksEnabled) {
