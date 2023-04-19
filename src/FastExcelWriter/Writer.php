@@ -247,10 +247,6 @@ class Writer
 
         //custom sheet protection here
 
-        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
-            $fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
-        }
-
         $rightToLeftValue = $sheet->isRightToLeft() ? 'true' : 'false';
 
         $fileWriter->write('<sheetViews>');
@@ -285,6 +281,10 @@ class Writer
         $fileWriter->write('</sheetView>');
 
         $fileWriter->write('</sheetViews>');
+
+        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
+            $fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
+        }
 
         if (!empty($sheet->colWidths)) {
             $fileWriter->write('<cols>');
