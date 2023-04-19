@@ -318,6 +318,10 @@ class Writer
 
         $sheet->writeDataEnd();
 
+        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
+            $sheet->fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
+        }
+
         $mergedCells = $sheet->getMergedCells();
         if ($mergedCells) {
             $sheet->fileWriter->write('<mergeCells>');
@@ -344,10 +348,6 @@ class Writer
             }
         }
         $sheet->fileWriter->write('<printOptions headings="false" gridLines="false" gridLinesSet="true" horizontalCentered="false" verticalCentered="false"/>');
-
-        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
-            $sheet->fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
-        }
 
         $links = $sheet->getExternalLinks();
         if ($links && $this->linksEnabled) {
