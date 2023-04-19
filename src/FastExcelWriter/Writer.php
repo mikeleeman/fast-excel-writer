@@ -282,10 +282,6 @@ class Writer
 
         $fileWriter->write('</sheetViews>');
 
-        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
-            $fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
-        }
-
         if (!empty($sheet->colWidths)) {
             $fileWriter->write('<cols>');
             foreach ($sheet->colWidths as $colNum => $columnWidth) {
@@ -294,6 +290,10 @@ class Writer
             $fileWriter->write('</cols>');
         }
         //$fileWriter->write('<col collapsed="false" hidden="false" max="1024" min="' . ($i + 1) . '" style="0" customWidth="false" width="11.5"/>');
+
+        if($sheet->getPasswordForReadOnlyProtection()!="" && $sheet->getPasswordForReadOnlyProtection()!=NULL){
+            $fileWriter->write('<sheetProtection sheet="true" password="'.$sheet->getPasswordForReadOnlyProtection().'" objects="true" scenarios="true" />');
+        }
 
         return $fileWriter;
     }
