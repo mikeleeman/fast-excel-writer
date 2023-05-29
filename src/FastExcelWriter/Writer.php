@@ -352,7 +352,7 @@ class Writer
         if($sheet->getMyPageSize()){
             $pageSetupAttr .= ' paperSize="'.$sheet->getMyPageSize().'"';
         }
-        
+
         $sheet->fileWriter->write('<printOptions headings="false" gridLines="false" gridLinesSet="true" horizontalCentered="false" verticalCentered="false"/>');
 
         $links = $sheet->getExternalLinks();
@@ -366,7 +366,7 @@ class Writer
 
         $sheet->fileWriter->write('<pageMargins left="0.5" right="0.5" top="1.0" bottom="1.0" header="0.5" footer="0.5"/>');
 
-        $sheet->fileWriter->write("<pageSetup  paperSize=\"1\" useFirstPageNumber=\"1\" horizontalDpi=\"0\" verticalDpi=\"0\" $pageSetupAttr r:id=\"rId1\"/>'");
+        $sheet->fileWriter->write("<pageSetup useFirstPageNumber=\"1\" horizontalDpi=\"0\" verticalDpi=\"0\" $pageSetupAttr r:id=\"rId1\"/>'");
 
         $sheet->fileWriter->write('<headerFooter differentFirst="false" differentOddEven="false">');
         $sheet->fileWriter->write('<oddHeader>&amp;C&amp;&quot;Times New Roman,Regular&quot;&amp;12&amp;A</oddHeader>');
