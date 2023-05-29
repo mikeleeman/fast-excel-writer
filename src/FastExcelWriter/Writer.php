@@ -338,9 +338,7 @@ class Writer
         }
 
         $pageSetupAttr = 'orientation="' . $sheet->getPageOrientation() . '"';
-        if($sheet->getMyPageSize()){
-            $pageSetupAttr .= ' paperSize="'.$sheet->getMyPageSize().'"';
-        }
+        
         if ($sheet->getPageFit()) {
             $pageFitToWidth = $sheet->getPageFitToWidth();
             $pageFitToHeight = $sheet->getPageFitToHeight();
@@ -350,6 +348,11 @@ class Writer
                 $pageSetupAttr .= ' fitToHeight="' . $pageFitToHeight . '" fitToWidth="' . $pageFitToWidth . '"';
             }
         }
+
+        if($sheet->getMyPageSize()){
+            $pageSetupAttr .= ' paperSize="'.$sheet->getMyPageSize().'"';
+        }
+        
         $sheet->fileWriter->write('<printOptions headings="false" gridLines="false" gridLinesSet="true" horizontalCentered="false" verticalCentered="false"/>');
 
         $links = $sheet->getExternalLinks();
