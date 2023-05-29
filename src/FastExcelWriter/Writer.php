@@ -339,7 +339,7 @@ class Writer
 
         $pageSetupAttr = 'orientation="' . $sheet->getPageOrientation() . '"';
         if($sheet->getMyPageSize()){
-            $pageSetupAttr .= ' paperSize="'.$sheet->getMyPageSize().'" ';
+            $pageSetupAttr .= ' paperSize="'.$sheet->getMyPageSize().'"';
         }
         if ($sheet->getPageFit()) {
             $pageFitToWidth = $sheet->getPageFitToWidth();
