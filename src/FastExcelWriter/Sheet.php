@@ -79,6 +79,8 @@ class Sheet
 
     private $custom_password_for_read_only = null;
 
+    private $my_page_size = null;
+
     /**
      * Sheet constructor
      *
@@ -324,6 +326,16 @@ class Sheet
     public function getPageFitToWidth()
     {
         return (int)($this->pageOptions['fit_width'] ?? 0);
+    }
+
+    public function setMyPageSize($page_size_preset)
+    {
+        $this->my_page_size = $page_size_preset;
+    }
+
+    public function getMyPageSize()
+    {
+        return $this->my_page_size;
     }
 
     /**
